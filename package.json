@@ -1,0 +1,33 @@
+{
+  "name": "minpdf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pofider/minpdf.git"
+  },  
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pofider/minpdf/issues"
+  },
+  "homepage": "https://github.com/pofider/minpdf#readme",
+  "scripts": {
+    "test": "mocha test&&standard"
+  },
+  "devDependencies": {
+    "mocha": "10.0.0",
+    "should": "13.2.3",
+    "standard": "16.0.4"
+  },
+  "standard": {
+    "env": {
+      "mocha": true
+    }
+  }
+}
