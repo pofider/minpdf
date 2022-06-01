@@ -39,7 +39,7 @@ describe('minpdf', () => {
     await fs.writeFile('out.pdf', pdfBuffer)
   })
 
-  it.only('should outlines', async () => {
+  it('should outlines', async () => {
     const document = new Document()
     const external = new External(await fs.readFile(path.join(__dirname, 'links.pdf')))
     document.append(external)
@@ -49,6 +49,44 @@ describe('minpdf', () => {
     }])
     const pdfBuffer = await document.asBuffer()
     console.log(pdfBuffer.toString())
+    await fs.writeFile('out.pdf', pdfBuffer)
+  })
+
+  it('should processText', async () => {
+    const document = new Document()
+    const external = new External(await fs.readFile(path.join(__dirname, 'main.pdf')))
+    document.append(external)
+    document.processText({
+      resolver: (text, { remove, position }) => {
+        remove(0, text.length)
+        console.log(position(0, text.length))
+      }
+    })
+    const pdfBuffer = await document.asBuffer()
+    await fs.writeFile('out.pdf', pdfBuffer)
+  })
+
+  it.only('should acroform', async () => {
+    const document = new Document()
+    const external = new External(await fs.readFile(path.join(__dirname, 'main.pdf')))
+    document.append(external)
+    document.processText({
+      resolver: async (text, { remove, getPosition }) => {
+        remove(0, text.length)
+        const { pageIndex, position } = getPosition(0, text.length)
+
+        await document.acroForm({
+          name: 'foo',
+          width: 100,
+          height: 20,
+          position,
+          pageIndex,
+          fontSize: 10,
+          type: 'text'
+        })
+      }
+    })
+    const pdfBuffer = await document.asBuffer()
     await fs.writeFile('out.pdf', pdfBuffer)
   })
 })

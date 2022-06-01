@@ -10,7 +10,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pofider/minpdf.git"
-  },  
+  },
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -19,6 +19,10 @@
   "homepage": "https://github.com/pofider/minpdf#readme",
   "scripts": {
     "test": "mocha test&&standard"
+  },
+  "dependencies": {
+    "parse-color": "1.0.0",
+    "pdfjs-dist": "2.14.305"
   },
   "devDependencies": {
     "mocha": "10.0.0",
