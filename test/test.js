@@ -102,13 +102,26 @@ describe('minpdf', () => {
     await fs.writeFile('out.pdf', pdfBuffer)
   })
 
-  it.only('should encrypt', async () => {
+  it('should encrypt', async () => {
     const document = new Document()
     const external = new External(await fs.readFile(path.join(__dirname, 'main.pdf')))
     document.append(external)
     document.encrypt({
       password: 'password',
       ownerPassword: 'password'
+    })
+    const pdfBuffer = await document.asBuffer()
+    await fs.writeFile('out.pdf', pdfBuffer)
+  })
+
+  it.only('should sign', async () => {
+    const document = new Document()
+    const external = new External(await fs.readFile(path.join(__dirname, 'main.pdf')))
+    document.append(external)
+    document.sign({
+      certificateBuffer: await fs.readFile(path.join(__dirname, 'certificate.p12')),
+      password: 'node-signpdf',
+      reason: 'some reason'
     })
     const pdfBuffer = await document.asBuffer()
     await fs.writeFile('out.pdf', pdfBuffer)
