@@ -66,7 +66,7 @@ describe('minpdf', () => {
     await fs.writeFile('out.pdf', pdfBuffer)
   })
 
-  it.only('should acroform', async () => {
+  it('should acroform', async () => {
     const document = new Document()
     const external = new External(await fs.readFile(path.join(__dirname, 'main.pdf')))
     document.append(external)
@@ -85,6 +85,30 @@ describe('minpdf', () => {
           type: 'text'
         })
       }
+    })
+    const pdfBuffer = await document.asBuffer()
+    await fs.writeFile('out.pdf', pdfBuffer)
+  })
+
+  it('should info', async () => {
+    const document = new Document()
+    const external = new External(await fs.readFile(path.join(__dirname, 'main.pdf')))
+    document.append(external)
+    document.info({
+      creationDate: new Date(2021, 2, 2),
+      title: 'Hello world šš'
+    })
+    const pdfBuffer = await document.asBuffer()
+    await fs.writeFile('out.pdf', pdfBuffer)
+  })
+
+  it.only('should encrypt', async () => {
+    const document = new Document()
+    const external = new External(await fs.readFile(path.join(__dirname, 'main.pdf')))
+    document.append(external)
+    document.encrypt({
+      password: 'password',
+      ownerPassword: 'password'
     })
     const pdfBuffer = await document.asBuffer()
     await fs.writeFile('out.pdf', pdfBuffer)
