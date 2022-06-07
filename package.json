@@ -34,6 +34,9 @@
   "standard": {
     "env": {
       "mocha": true
-    }
+    },
+    "ignore": [
+      "lib/mixins/encrypt/security"
+    ]
   }
 }
